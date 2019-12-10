@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(App());
 
+
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class App extends StatelessWidget {
               ),
               tabs: choices.map((Choice choice) {
                 return Container(
-                  padding: EdgeInsets.only(left: 12, right: 12, bottom:0 ),
+                  padding: EdgeInsets.only(left: 8, right:8 , bottom:0 ),
                   child:Tab(
                   text: choice.title,
                 ) 
@@ -52,7 +54,7 @@ class App extends StatelessWidget {
           body: TabBarView(
             children: choices.map((Choice choice) {
               return Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(10.0),
                 child: ChoiceCard(choice: choice),
               );
             }).toList(),
@@ -78,17 +80,25 @@ class App extends StatelessWidget {
 }
 
 class Choice {
-  const Choice({this.title});
+  const Choice({this.title, this.id, this.lista});
 
   final String title;
+  final int id;
+  final  List lista;
   
 }
 
+
+
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Popular'),
-  const Choice(title: 'Cabello Corto'),
-  const Choice(title: 'Cabello Medio'),
-  const Choice(title: 'Cabello Largo'),
+  const Choice(title: 'Popular', id: 45, lista: [
+    'https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis-640x422.jpg',
+    'https://images.unsplash.com/photo-1575859694244-0b337bf58e0b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80'
+    
+  ]),
+  const Choice(title: 'Cabello Corto',  id: 60, lista: ['https://images.unsplash.com/photo-1575859694244-0b337bf58e0b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80']),
+  const Choice(title: 'Cabello Medio', id: 25, lista: ['https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis-640x422.jpg']),
+  const Choice(title: 'Cabello Largo', id: 75, lista: ['https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis-640x422.jpg']),
 ];
 
 class ChoiceCard extends StatelessWidget {
@@ -98,18 +108,44 @@ class ChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = Theme.of(context).textTheme.display1;
-    return Card(
-      color: Colors.white,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(choice.title, style: textStyle),
-          ],
-        ),
+    return ListView.builder(
+      itemCount: choice.lista.length,
+      itemBuilder: (BuildContext context, int index){
+        return Card(
+          color: Colors.white,
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5),
       ),
+          child: Column(
+            children: <Widget>[
+              Image.network(choice.lista[index]),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Container(
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(child: Icon(Icons.favorite_border,
+                        color: Colors.pink
+                        ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.share,
+                        color: Colors.pink,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 }
