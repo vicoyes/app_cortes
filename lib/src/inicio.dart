@@ -61,20 +61,6 @@ class _InicioState extends State<Inicio> {
               );
             }).toList(),
           ),
-          bottomNavigationBar:  BottomNavigationBar(
-       currentIndex: 0, 
-       elevation: 10,
-       items: [
-         BottomNavigationBarItem(
-           icon: new Icon(Icons.home),
-           title: new Text('Inicio'),
-         ),
-         BottomNavigationBarItem(
-           icon: new Icon(Icons.favorite_border),
-           title: new Text('Mis Favoritos'),
-         )
-       ],
-     ),
 
         ),
       ),
