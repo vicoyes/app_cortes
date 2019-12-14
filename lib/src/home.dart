@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'modelHair.dart';
 
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,6 @@ class Home extends StatelessWidget {
     );
   }
 }
-
 
 class ChoiceCard extends StatelessWidget {
   const ChoiceCard({Key key, this.choice}) : super(key: key);
