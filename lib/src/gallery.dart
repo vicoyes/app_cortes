@@ -52,7 +52,8 @@ class _GalleryState extends State<Gallery> {
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (context, index) {
-        return Image.network('https://picsum.photos/id/${ids[index]}/300/300');
+        return Image.network('https://picsum.photos/id/${ids[index]}/300/300',
+        );
       },
       itemCount: ids.length,
     );
