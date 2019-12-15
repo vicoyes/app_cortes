@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hair_app/src/favorite.dart';
 import 'package:hair_app/src/inicio.dart';
 
+
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -9,11 +11,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-int currentetab;
+int currentetab = 0;
 final List<Widget> screens =[
   Inicio(),
   Favorite()
 ];
+
 
 Widget currentScreen = Inicio();
 

@@ -6,6 +6,7 @@ class Choice {
   final List lista;
 }
 
+@override
 const List<Choice> choices = const <Choice>[
   const Choice(title: 'Popular', id: 45, lista: [
     'https://www.tekcrispy.com/wp-content/uploads/2017/12/bancos-imagenes-gratis-640x422.jpg',

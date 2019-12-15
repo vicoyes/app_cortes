@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hair_app/src/home.dart';
-import 'package:hair_app/src/inicio.dart';
-
 
 
 

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hair_app/src/gallery.dart';
+
+
 
 
 class Favorite extends StatefulWidget {
@@ -8,6 +11,7 @@ class Favorite extends StatefulWidget {
 
 class _FavoriteState extends State<Favorite> {
 String title = 'Favoritos';
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +27,10 @@ String title = 'Favoritos';
               fontWeight: FontWeight.w700,)
             ),
             title: Text(title),
-            leading: Builder(
-              builder: (BuildContext context){
-                return IconButton(
-                  color: Colors.black,
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                );
-              },
-            ),
+            
           ),
+
+          body: Gallery(),
         ),
     );
   }
