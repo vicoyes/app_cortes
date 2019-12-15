@@ -1,3 +1,9 @@
+import 'dart:html';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+
 class Choice {
   const Choice({this.title, this.id, this.lista});
 
@@ -5,6 +11,33 @@ class Choice {
   final int id;
   final List lista;
 }
+
+bool loading;
+List<String> url;
+
+@override
+  void initState() {
+    loading = true;
+    url = [];
+
+    _loadImageIds();
+  }
+
+  void _loadImageIds() async {
+    final response = await http.get('https://picsum.photos/v2/list');
+    final json = jsonDecode(response.body);
+
+    List<String> _url =[];
+
+    for (var image in json) {
+      _url.add(image['url']);
+    }
+
+    _url = url;
+
+  }
+
+ 
 
 @override
 const List<Choice> choices = const <Choice>[
