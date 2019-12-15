@@ -16,6 +16,7 @@ String title = 'Favoritos';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.pink),
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,

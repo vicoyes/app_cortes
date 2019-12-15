@@ -31,10 +31,14 @@ class _GalleryState extends State<Gallery> {
       _ids.add(image['id']);
     }
 
-    setState(() {
+    
+     if (this.mounted) {
+        setState(() {
       loading = false;
       ids = _ids;
     });
+   }
+   
   }
 
   @override
