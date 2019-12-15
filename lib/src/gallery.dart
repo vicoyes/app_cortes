@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hair_app/src/imagenes.dart';
 import 'package:http/http.dart' as http;
 
 class Gallery extends StatefulWidget {
@@ -25,25 +26,23 @@ class _GalleryState extends State<Gallery> {
     final response = await http.get('https://picsum.photos/v2/list');
     final json = jsonDecode(response.body);
 
-    List<String> _ids =[];
+    List<String> _ids = [];
 
     for (var image in json) {
       _ids.add(image['id']);
     }
 
-    
-     if (this.mounted) {
-        setState(() {
-      loading = false;
-      ids = _ids;
-    });
-   }
-   
+    if (this.mounted) {
+      setState(() {
+        loading = false;
+        ids = _ids;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if(loading){
+    if (loading) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -52,7 +51,24 @@ class _GalleryState extends State<Gallery> {
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (context, index) {
-        return Image.network('https://picsum.photos/id/${ids[index]}/300/300',
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return ImagenGallery();
+            }));
+          },
+          child: Image.network(
+            'https://picsum.photos/id/${ids[index]}/300/300',
+            loadingBuilder:
+                (context, Widget child, ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: Image(
+                  image: AssetImage('img/loading-2.png'),
+                ),
+              );
+            },
+          ),
         );
       },
       itemCount: ids.length,

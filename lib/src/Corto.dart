@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import 'imagenes.dart';
+
 class Corto extends StatefulWidget {
   @override
   _CortoState createState() => _CortoState();
@@ -58,7 +60,26 @@ class _CortoState extends State<Corto> {
             ),
             child: Column(
               children: <Widget>[
-                Image.network('https://picsum.photos/id/${ids[index]}/400/300'),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ImagenGallery();
+                        },
+                      ),
+                    );
+                  },
+                  child: Image.network(
+                    'https://picsum.photos/id/${ids[index]}/400/300',
+                    loadingBuilder: (context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                          child: Image(image: AssetImage('img/loading-1.png')));
+                    },
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Container(
