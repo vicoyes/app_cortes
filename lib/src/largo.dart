@@ -43,6 +43,11 @@ class _LargoState extends State<Largo> {
 
   @override
   Widget build(BuildContext context) {
+     if(loading){
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return ListView.builder(
         itemCount: ids.length,
         itemBuilder: (BuildContext context, int index) {

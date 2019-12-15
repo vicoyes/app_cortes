@@ -43,6 +43,11 @@ class _GalleryState extends State<Gallery> {
 
   @override
   Widget build(BuildContext context) {
+    if(loading){
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return GridView.builder(
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),

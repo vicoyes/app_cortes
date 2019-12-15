@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+
 import 'package:http/http.dart' as http;
 
 class Popular extends StatefulWidget {
@@ -47,6 +48,11 @@ class _PopularState extends State<Popular> {
 
   @override
   Widget build(BuildContext context) {
+     if(loading){
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return ListView.builder(
       itemCount: ids.length,
       itemBuilder: (BuildContext context, int index){
@@ -74,8 +80,15 @@ class _PopularState extends State<Popular> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.share,
-                        color: Colors.pink,
+                        child: IconButton(
+                            icon: Icon(Icons.share,
+                          color: Colors.pink,
+                          ),
+                          onPressed: (){
+                            setState(() {
+                              
+                            });
+                          },
                         ),
                       )
                     ],

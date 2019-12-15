@@ -42,6 +42,11 @@ class _CortoState extends State<Corto> {
 
   @override
   Widget build(BuildContext context) {
+     if(loading){
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return ListView.builder(
         itemCount: ids.length,
         itemBuilder: (BuildContext context, int index) {
