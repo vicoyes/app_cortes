@@ -32,19 +32,18 @@ class _CortoState extends State<Corto> {
     for (var image in json) {
       _ids.add(image['id']);
     }
-    
+
     if (this.mounted) {
-        setState(() {
-      loading = false;
-      ids = _ids;
-    });
-  }
-    
+      setState(() {
+        loading = false;
+        ids = _ids;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-     if(loading){
+    if (loading) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -70,14 +69,20 @@ class _CortoState extends State<Corto> {
                       ),
                     );
                   },
-                  child: Image.network(
-                    'https://picsum.photos/id/${ids[index]}/400/300',
-                    loadingBuilder: (context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                          child: Image(image: AssetImage('img/loading-1.png')));
-                    },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        topRight: Radius.circular(5)),
+                    child: Image.network(
+                      'https://picsum.photos/id/${ids[index]}/400/300',
+                      loadingBuilder: (context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                            child:
+                                Image(image: AssetImage('img/loading-1.png')));
+                      },
+                    ),
                   ),
                 ),
                 Padding(

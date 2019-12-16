@@ -32,6 +32,7 @@ final PageStorageBucket bucket = PageStorageBucket();
       ),
 
       bottomNavigationBar: BottomAppBar(
+        elevation: 20,
         shape: CircularNotchedRectangle(),
         child: Container(
           height: 60,

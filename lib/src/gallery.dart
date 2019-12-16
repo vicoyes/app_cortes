@@ -47,31 +47,37 @@ class _GalleryState extends State<Gallery> {
         child: CircularProgressIndicator(),
       );
     }
-    return GridView.builder(
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return ImagenGallery();
-            }));
-          },
-          child: Image.network(
-            'https://picsum.photos/id/${ids[index]}/300/300',
-            loadingBuilder:
-                (context, Widget child, ImageChunkEvent loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Center(
-                child: Image(
-                  image: AssetImage('img/loading-2.png'),
-                ),
-              );
-            },
-          ),
-        );
-      },
-      itemCount: ids.length,
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 8),
+      child: GridView.builder(
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+        itemBuilder: (context, index) {
+          return ClipRRect (
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return ImagenGallery();
+                }));
+              },
+              child: Image.network(
+                'https://picsum.photos/id/${ids[index]}/300/300',
+                loadingBuilder:
+                    (context, Widget child, ImageChunkEvent loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: Image(
+                      image: AssetImage('img/loading-2.png'),
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+        itemCount: ids.length,
+      ),
     );
   }
 }

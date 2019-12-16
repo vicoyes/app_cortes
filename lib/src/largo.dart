@@ -3,7 +3,7 @@ import 'package:hair_app/src/imagenes.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:meet_network_image/meet_network_image.dart';
+
 
 class Largo extends StatefulWidget {
   @override
@@ -33,19 +33,17 @@ class _LargoState extends State<Largo> {
       _ids.add(image['id']);
     }
 
-    
-     if (this.mounted) {
-        setState(() {
-      loading = false;
-      ids = _ids;
-    });
-   }
-   
+    if (this.mounted) {
+      setState(() {
+        loading = false;
+        ids = _ids;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-     if(loading){
+    if (loading) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -61,7 +59,7 @@ class _LargoState extends State<Largo> {
             ),
             child: Column(
               children: <Widget>[
-                 GestureDetector(
+                GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -71,14 +69,20 @@ class _LargoState extends State<Largo> {
                       ),
                     );
                   },
-                  child: Image.network(
-                    'https://picsum.photos/id/${ids[index]}/400/300',
-                    loadingBuilder: (context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                          child: Image(image: AssetImage('img/loading-1.png')));
-                    },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        topRight: Radius.circular(5)),
+                    child: Image.network(
+                      'https://picsum.photos/id/${ids[index]}/400/300',
+                      loadingBuilder: (context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                            child:
+                                Image(image: AssetImage('img/loading-1.png')));
+                      },
+                    ),
                   ),
                 ),
                 Padding(
