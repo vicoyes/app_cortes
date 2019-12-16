@@ -5,11 +5,15 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class ImagenGallery extends StatefulWidget {
+  final String id;
+  ImagenGallery(this.id);
+
   @override
   _ImagenGalleryState createState() => _ImagenGalleryState();
 }
 
 class _ImagenGalleryState extends State<ImagenGallery> {
+
   bool loading;
   List<String> ids;
 
@@ -48,13 +52,11 @@ class _ImagenGalleryState extends State<ImagenGallery> {
       );
     }
 
-    @override
-    var uriMage = Image.network('https://picsum.photos/id/0/400/300');
 
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.pink),
       home: Scaffold(
-        backgroundColor: Colors.grey[900dd],
+        backgroundColor: Colors.grey[900],
           appBar: AppBar(
             leading: new IconButton(
               icon: new Icon(Icons.arrow_back, color: Colors.black),
@@ -97,56 +99,3 @@ class _ImagenGalleryState extends State<ImagenGallery> {
   }
 }
 
-// Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: <Widget>[
-//               Padding(
-//                 padding: const EdgeInsets.only(top: 20, left: 8, right: 8, bottom: 0),
-//                 child: ClipRRect(
-//                   borderRadius: BorderRadius.all(Radius.circular(5)),
-//                   child: uriMage,
-//                 ),
-//               ),
-//               Expanded(
-//                               child: ListView.builder(
-//                     scrollDirection: Axis.horizontal,
-//                     itemCount: ids.length,
-//                     itemBuilder: (BuildContext context, int index) {
-//                       return Row(
-//                           children: <Widget>[
-//                             GestureDetector(
-//                               onTap: () {
-//                                 setState(() {
-//                                   uriMage = Image.network('https://picsum.photos/id/${ids[index]}/400/300');
-//                                 });
-//                                 print(uriMage);
-//                               },
-//                               child: Padding(
-//                                 padding: const EdgeInsets.all(4),
-//                                 child: ClipRRect(
-//                                   borderRadius: BorderRadius.all(
-//                                       Radius.circular(5),
-//                                       ),
-//                                   child: Image.network(
-//                                     'https://picsum.photos/id/${ids[index]}/150/150',
-//                                     loadingBuilder: (context, Widget child,
-//                                         ImageChunkEvent loadingProgress) {
-//                                       if (loadingProgress == null) return child;
-//                                       return Center(
-//                                           child: Image(
-//                                               image: AssetImage('img/loading-2.png')));
-//                                     },
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         );
-
-//                     }),
-//               ),
-//             ],
-//           ),
-//         ),

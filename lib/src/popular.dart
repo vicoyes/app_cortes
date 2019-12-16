@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:hair_app/src/imagenes.dart';
 
 import 'package:http/http.dart' as http;
+
+import 'imagenes.dart';
 
 class Popular extends StatefulWidget {
   @override
@@ -12,32 +13,44 @@ class Popular extends StatefulWidget {
 class _PopularState extends State<Popular> {
   bool loading;
   List<String> ids;
+  List<Map>  idimgs;
 
   @override
   void initState() {
     loading = true;
     ids = [];
+    idimgs = [];
 
     _loadImageIds();
     super.initState();
   }
 
   void _loadImageIds() async {
-    final response = await http.get('https://picsum.photos/v2/list');
+    final response = await http.get('https://app-cabellos.firebaseio.com/cortes.json');
     final json = jsonDecode(response.body);
 
-    List<String> _ids = [];
+    List<String> _url = [];
+    List<Map> _idimgs = [];
 
     for (var image in json) {
-      _ids.add(image['id']);
+      if(image["Categoria"] == "Cortos"){
+        _url.add(image["imagen"]);
+        _idimgs.add(image);
+
+        
+      }
+      
     }
+    
 
     if (this.mounted) {
       setState(() {
         loading = false;
-        ids = _ids;
+        ids = _url;
+        idimgs = _idimgs;
       });
     }
+    print(idimgs);
   }
 
   @override
@@ -63,7 +76,7 @@ class _PopularState extends State<Popular> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return ImagenGallery();
+                          return ImagenGallery(idimgs[index]["id"]);
                         },
                       ),
                     );
@@ -73,7 +86,7 @@ class _PopularState extends State<Popular> {
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5)),
                     child: Image.network(
-                      'https://picsum.photos/id/${ids[index]}/400/300',
+                      ids[index],
                       loadingBuilder: (context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -99,14 +112,9 @@ class _PopularState extends State<Popular> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.share,
-                              color: Colors.pink,
-                            ),
-                            onPressed: () {
-                              setState(() {});
-                            },
+                          child: Icon(
+                            Icons.share,
+                            color: Colors.pink,
                           ),
                         )
                       ],

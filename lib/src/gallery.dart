@@ -58,7 +58,7 @@ class _GalleryState extends State<Gallery> {
                     child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return ImagenGallery();
+                  return ImagenGallery("0");
                 }));
               },
               child: Image.network(

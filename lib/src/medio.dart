@@ -13,30 +13,41 @@ class Medio extends StatefulWidget {
 class _MedioState extends State<Medio> {
   bool loading;
   List<String> ids;
+  List<Map>  idimgs;
 
   @override
   void initState() {
     loading = true;
     ids = [];
+    idimgs = [];
+    
 
     _loadImageIds();
     super.initState();
   }
 
   void _loadImageIds() async {
-    final response = await http.get('https://picsum.photos/v2/list');
+    final response = await http.get('https://app-cabellos.firebaseio.com/cortes.json');
     final json = jsonDecode(response.body);
 
-    List<String> _ids = [];
+    List<String> _url = [];
+    List<Map> _idimgs = [];
 
-    for (var image in json) {
-      _ids.add(image['id']);
+   for (var image in json) {
+      if(image["Categoria"] == "Cortos"){
+        _url.add(image["imagen"]);
+        _idimgs.add(image);
+
+        
+      }
+      
     }
 
     if (this.mounted) {
       setState(() {
         loading = false;
-        ids = _ids;
+        ids = _url;
+        idimgs = _idimgs;
       });
     }
   }
@@ -64,7 +75,7 @@ class _MedioState extends State<Medio> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return ImagenGallery();
+                          return ImagenGallery(idimgs[index]["id"]);
                         },
                       ),
                     );
@@ -74,7 +85,7 @@ class _MedioState extends State<Medio> {
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5)),
                     child: Image.network(
-                      'https://picsum.photos/id/${ids[index]}/400/300',
+                      ids[index],
                       loadingBuilder: (context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
