@@ -1,82 +1,64 @@
-[
-  {
-    "id": "0",
-    "Categoria": "popular",
-    "width": 5616,
-    "height": 3744,
-    "favorito": true,
-    "imagen": "https://unsplash.com/photos/yC-Yzbqy7PY",
-    "img": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ],
-    "video": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ]
-  },
-  {
-    "id": "2",
-    "Categoria": "Corto",
-    "width": 5616,
-    "height": 3744,
-    "favorito": false,
-    "imagen": "https://unsplash.com/photos/yC-Yzbqy7PY",
-    "img": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ],
-    "video": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ]
-  },
-  {
-    "id": "3",
-    "Categoria": "Medio",
-    "width": 5616,
-    "height": 3744,
-    "favorito": true,
-    "imagen": "https://unsplash.com/photos/yC-Yzbqy7PY",
-    "img": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ],
-    "video": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ]
-  },
-  {
-    "id": "4",
-    "Categoria": "Largo",
-    "width": 5616,
-    "height": 3744,
-    "favorito": false,
-    "imagen": "https://unsplash.com/photos/yC-Yzbqy7PY",
-    "img": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ],
-    "video": [
-      {
-        "0": "https://unsplash.com/photos/yC-Yzbqy7PY",
-        "1": "https://unsplash.com/photos/yC-Yzbqy7PY"
-      }
-    ]
-  }
-]
+{
+  "cortes": [
+    {
+      "Categoria": "Cortos",
+      "favorito": true,
+      "height": 400,
+      "id": "0",
+      "imagen": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2FSin%20t%C3%ADtulo-1.png?alt=media&token=c59fc184-1d2b-4f21-aa8e-7cf899d363fd",
+      "img": {
+        "0": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5",
+        "1": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "2": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "3": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5"
+      },
+      "video": { "0": "https://www.youtube.com/watch?v=Q4_qhvh9R3g" },
+      "width": 600
+    },
+    {
+      "Categoria": "Cortos",
+      "favorito": false,
+      "height": 3744,
+      "id": "2",
+      "imagen": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+      "img": {
+        "0": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5",
+        "1": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "2": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "3": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5"
+      },
+      "video": { "0": "https://www.youtube.com/watch?v=Q4_qhvh9R3g" },
+      "width": 5616
+    },
+    {
+      "Categoria": "Medios",
+      "favorito": true,
+      "height": 3744,
+      "id": "3",
+      "imagen": "https://unsplash.com/photos/yC-Yzbqy7PY",
+      "img": {
+        "0": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5",
+        "1": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "2": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "3": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5"
+      },
+      "video": [{ "0": "https://www.youtube.com/watch?v=Q4_qhvh9R3g" }],
+      "width": 5616
+    },
+    {
+      "Categoria": "Largos",
+      "favorito": false,
+      "height": 3744,
+      "id": "4",
+      "imagen": "https://unsplash.com/photos/yC-Yzbqy7PY",
+      "img": {
+        "0": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5",
+        "1": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "2": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F3.png?alt=media&token=0509c1fc-108c-4b37-96e4-c4b2b82b9636",
+        "3": "https://firebasestorage.googleapis.com/v0/b/app-cabellos.appspot.com/o/Cortos%2F1%2F4.png?alt=media&token=63d28bb2-43af-436f-9ccf-436a54913fc5"
+      },
+      "video": { "0": "https://www.youtube.com/watch?v=Q4_qhvh9R3g" },
+      "width": 5616
+    }
+  ]
+}

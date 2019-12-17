@@ -15,26 +15,42 @@ class ImagenGallery extends StatefulWidget {
 class _ImagenGalleryState extends State<ImagenGallery> {
 
   bool loading;
-  List<String> ids;
+  List<dynamic> ids;
+  List<dynamic> video;
 
   @override
   void initState() {
     loading = true;
     ids = [];
+    video = [];
 
     _loadImageIds();
     super.initState();
   }
 
   void _loadImageIds() async {
-    final response = await http.get('https://picsum.photos/v2/list');
+    final response = await http.get('https://app-cabellos.firebaseio.com/cortes.json');
     final json = jsonDecode(response.body);
-
+    
     List<String> _ids = [];
+    List<dynamic> _video = [];
 
     for (var image in json) {
-      _ids.add(image['id']);
+      if(image["id"] == this.widget.id){
+         
+            var listImg = image["img"];
+
+        for (var lista_de_imagen in listImg) {
+          _ids.add(lista_de_imagen);
+          
+        }
+
+        print(_ids.runtimeType);
+
+      }
+      
     }
+    
 
     if (this.mounted) {
       setState(() {
@@ -43,6 +59,8 @@ class _ImagenGalleryState extends State<ImagenGallery> {
       });
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +99,7 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                   return ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                                   child: new Image.network(
-                      'https://picsum.photos/id/${ids[index]}/300/300',
+                      ids[index],
                       fit: BoxFit.fill,
                     ),
                   );
