@@ -1,8 +1,14 @@
+// dependencias
+import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'dart:io';
 
+// widget
 import 'imagenes.dart';
 
 class Corto extends StatefulWidget {
@@ -13,7 +19,7 @@ class Corto extends StatefulWidget {
 class _CortoState extends State<Corto> {
   bool loading;
   List<String> ids;
-  List<Map>  idimgs;
+  List<Map> idimgs;
 
   @override
   void initState() {
@@ -26,22 +32,19 @@ class _CortoState extends State<Corto> {
   }
 
   void _loadImageIds() async {
-    final response = await http.get('https://app-cabellos.firebaseio.com/cortes.json');
+    final response =
+        await http.get('https://app-cabellos.firebaseio.com/cortes.json');
     final json = jsonDecode(response.body);
 
     List<String> _url = [];
     List<Map> _idimgs = [];
 
     for (var image in json) {
-      if(image["Categoria"] == "Cortos"){
+      if (image["Categoria"] == "Cortos") {
         _url.add(image["imagen"]);
         _idimgs.add(image);
-
-        
       }
-      
     }
-    
 
     if (this.mounted) {
       setState(() {
@@ -51,6 +54,15 @@ class _CortoState extends State<Corto> {
       });
     }
     print(idimgs);
+  }
+
+  // compartir img
+
+  void compartir(imgUrl) async {
+    var request = await HttpClient().getUrl(Uri.parse(imgUrl));
+    var response = await request.close();
+    Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+    await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
   }
 
   @override
@@ -109,12 +121,11 @@ class _CortoState extends State<Corto> {
                             children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(0),
-                                child:
-                                    IconButton (icon: Icon(Icons.favorite_border, color: Colors.pink),
-                                      onPressed: (){
-
-                                      },
-                                    ),
+                                child: IconButton(
+                                  icon: Icon(Icons.favorite_border,
+                                      color: Colors.pink),
+                                  onPressed: () {},
+                                ),
                               ),
                             ],
                           ),
@@ -125,13 +136,13 @@ class _CortoState extends State<Corto> {
                             children: <Widget>[
                               Container(
                                 child: IconButton(
-                                  icon:Icon(
-                                Icons.share,
-                                color: Colors.pink,
-                              ), 
-                              onPressed: (){
-                                
-                              },
+                                  icon: Icon(
+                                    Icons.share,
+                                    color: Colors.pink,
+                                  ),
+                                  onPressed: () {
+                                    compartir(ids[index]);
+                                  },
                                 ),
                               ),
                             ],

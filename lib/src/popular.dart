@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'dart:io';
 
@@ -163,7 +162,6 @@ class _PopularState extends State<Popular> {
                                     ),
                                     onPressed: () async {
                                       compartir(ids[index]);
-                                      print(ids[index]);
                                     }),
                               ),
                             ],
