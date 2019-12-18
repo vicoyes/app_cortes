@@ -1,8 +1,15 @@
+// dependencias
+import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import 'package:image_picker_saver/image_picker_saver.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'dart:io';
 
+// widget
 import 'imagenes.dart';
 
 class Popular extends StatefulWidget {
@@ -13,7 +20,8 @@ class Popular extends StatefulWidget {
 class _PopularState extends State<Popular> {
   bool loading;
   List<String> ids;
-  List<Map>  idimgs;
+  List<Map> idimgs;
+  var _imageFile;
 
   @override
   void initState() {
@@ -26,22 +34,19 @@ class _PopularState extends State<Popular> {
   }
 
   void _loadImageIds() async {
-    final response = await http.get('https://app-cabellos.firebaseio.com/cortes.json');
+    final response =
+        await http.get('https://app-cabellos.firebaseio.com/cortes.json');
     final json = jsonDecode(response.body);
 
     List<String> _url = [];
     List<Map> _idimgs = [];
 
     for (var image in json) {
-      if(image["Categoria"] == "Cortos"){
+      if (image["Categoria"] == "Cortos") {
         _url.add(image["imagen"]);
         _idimgs.add(image);
-
-        
       }
-      
     }
-    
 
     if (this.mounted) {
       setState(() {
@@ -51,6 +56,34 @@ class _PopularState extends State<Popular> {
       });
     }
     print(idimgs);
+  }
+
+  // Funcion para descargar activar si deseas activar la funcion descargar
+
+  // void _onImageSaveButtonPressed(urlImage) async {
+  //   print("_onImageSaveButtonPressed");
+  //   var response = await http.get(urlImage);
+
+  //   debugPrint(response.statusCode.toString());
+
+  //   var filePath =
+  //       await ImagePickerSaver.saveFile(fileData: response.bodyBytes);
+
+  //   var savedFile = File.fromUri(Uri.file(filePath));
+  //   setState(() {
+  //     _imageFile = Future<File>.sync(() => savedFile);
+  //   });
+
+  //   print(_imageFile);
+  // }
+
+  // compartir img
+
+  void compartir(imgUrl) async {
+    var request = await HttpClient().getUrl(Uri.parse(imgUrl));
+    var response = await request.close();
+    Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+    await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
   }
 
   @override
@@ -104,17 +137,36 @@ class _PopularState extends State<Popular> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            child:
-                                Icon(Icons.favorite_border, color: Colors.pink),
+                          padding: const EdgeInsets.all(0),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(0),
+                                child: IconButton(
+                                  icon: Icon(Icons.favorite_border,
+                                      color: Colors.pink),
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.share,
-                            color: Colors.pink,
+                          padding: const EdgeInsets.all(0),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: IconButton(
+                                    icon: Icon(
+                                      Icons.share,
+                                      color: Colors.pink,
+                                    ),
+                                    onPressed: () async {
+                                      compartir(ids[index]);
+                                      print(ids[index]);
+                                    }),
+                              ),
+                            ],
                           ),
                         )
                       ],

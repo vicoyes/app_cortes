@@ -102,17 +102,37 @@ class _LargoState extends State<Largo> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            child:
-                                Icon(Icons.favorite_border, color: Colors.pink),
+                          padding: const EdgeInsets.all(0),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(0),
+                                child:
+                                    IconButton (icon: Icon(Icons.favorite_border, color: Colors.pink),
+                                      onPressed: (){
+
+                                      },
+                                    ),
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.share,
-                            color: Colors.pink,
+                          padding: const EdgeInsets.all(0),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: IconButton(
+                                  icon:Icon(
+                                Icons.share,
+                                color: Colors.pink,
+                              ), 
+                              onPressed: (){
+                                
+                              },
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       ],
