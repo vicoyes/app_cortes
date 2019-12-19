@@ -19,12 +19,13 @@ class _LargoState extends State<Largo> {
   bool loading;
   List<String> ids;
   List<Map> idimgs;
+  bool like;
 
   @override
   void initState() {
-    loading = true;
     ids = [];
     idimgs = [];
+    like = false;
 
     _loadImageIds();
     super.initState();
@@ -61,6 +62,12 @@ class _LargoState extends State<Largo> {
     var response = await request.close();
     Uint8List bytes = await consolidateHttpClientResponseBytes(response);
     await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
+  }
+
+  void _like(){
+    setState(() {
+      like = !like;
+    });
   }
 
   @override
@@ -120,9 +127,12 @@ class _LargoState extends State<Largo> {
                               Container(
                                 padding: EdgeInsets.all(0),
                                 child: IconButton(
-                                  icon: Icon(Icons.favorite_border,
+                                  icon: Icon(like ? Icons.favorite_border : Icons.favorite,
                                       color: Colors.pink),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _like();
+                                    print(like);
+                                  },
                                 ),
                               ),
                             ],

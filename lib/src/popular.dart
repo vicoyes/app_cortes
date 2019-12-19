@@ -11,6 +11,9 @@ import 'dart:io';
 // widget
 import 'imagenes.dart';
 
+// clases
+import '../model/favoriteButton.dart';
+
 class Popular extends StatefulWidget {
   @override
   _PopularState createState() => _PopularState();
@@ -21,12 +24,14 @@ class _PopularState extends State<Popular> {
   List<String> ids;
   List<Map> idimgs;
   var _imageFile;
+  bool like;
 
   @override
   void initState() {
     loading = true;
     ids = [];
     idimgs = [];
+    like = false;
 
     _loadImageIds();
     super.initState();
@@ -84,6 +89,12 @@ class _PopularState extends State<Popular> {
     Uint8List bytes = await consolidateHttpClientResponseBytes(response);
     await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
   }
+   void _like(){
+     setState(() {
+       like = !like;
+     });
+    
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -142,9 +153,11 @@ class _PopularState extends State<Popular> {
                               Container(
                                 padding: EdgeInsets.all(0),
                                 child: IconButton(
-                                  icon: Icon(Icons.favorite_border,
+                                  icon: Icon(like ? Icons.favorite : Icons.favorite_border,
                                       color: Colors.pink),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _like();
+                                  },
                                 ),
                               ),
                             ],
