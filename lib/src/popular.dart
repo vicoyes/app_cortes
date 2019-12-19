@@ -9,10 +9,9 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'dart:io';
 
 // widget
+import 'favoriteButton.dart';
 import 'imagenes.dart';
 
-// clases
-import '../model/favoriteButton.dart';
 
 class Popular extends StatefulWidget {
   @override
@@ -89,12 +88,6 @@ class _PopularState extends State<Popular> {
     Uint8List bytes = await consolidateHttpClientResponseBytes(response);
     await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
   }
-   void _like(){
-     setState(() {
-       like = !like;
-     });
-    
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -152,13 +145,7 @@ class _PopularState extends State<Popular> {
                             children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(0),
-                                child: IconButton(
-                                  icon: Icon(like ? Icons.favorite : Icons.favorite_border,
-                                      color: Colors.pink),
-                                  onPressed: () {
-                                    _like();
-                                  },
-                                ),
+                                child:FavoriteButton(ids[index], idimgs[index]["id"]),
                               ),
                             ],
                           ),
