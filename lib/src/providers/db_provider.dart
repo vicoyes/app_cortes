@@ -45,8 +45,7 @@ class DBProvider {
         await db.execute(
           'CREATE TABLE favorito ('
           'id INTEGER PRIMAY KEY,'
-          'idImg INTEGER,'
-          'url TEXT,'
+          'urlimgae TEXT,'
           'like TEXT'
           ')' 
         );
@@ -63,11 +62,12 @@ class DBProvider {
     final db =await database;
 
     final res = await  db.rawInsert(
-      "INSERT Into favorito (id, idImg, url, like) "
-      "VALUES( '${nuevoFavorito.id}', '${nuevoFavorito.idImg}', '${nuevoFavorito.url}', '${nuevoFavorito.like}')"
+      "INSERT Into favorito (id, url, like) "
+      "VALUES( '${nuevoFavorito.id}', '${nuevoFavorito.url}', '${nuevoFavorito.like}')"
     );
 
     return res;
+   
 
   }
 
@@ -93,7 +93,7 @@ class DBProvider {
   Future<List<FavoriteImg>> getAllFavoritos() async{
 
       final db = await database;
-      final res = await db.query('favoritos');
+      final res = await db.query('favorito');
 
       List<FavoriteImg> list = res.isNotEmpty 
       ? res.map((c) => FavoriteImg.fromJson(c)).toList()
@@ -126,7 +126,7 @@ class DBProvider {
 
 // Eliminar registro
 
-Future<int>deleteFavorito(int id) async {
+Future <int> deleteFavorito(int id) async {
 
   final db = await database;
   final res = await db.delete('favorito', where: 'id = ?', whereArgs: [id]);

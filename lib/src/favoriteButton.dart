@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hair_app/src/providers/db_provider.dart';
 
 
 class FavoriteButton extends StatefulWidget {
@@ -17,17 +18,19 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   String url;
   
 @override
-_toggleFavorite(url, id  ) {
-  setState(() {
+ _toggleFavorite(url, id  )  {
+
+ setState(() {
     
     if (_isFavorited) {
       _isFavorited = false;
-      print(url);
-      print("No me gusta");
+      int idImage = int.parse(id);
+      DBProvider.db.deleteFavorito(idImage);
+      
     } else {
       _isFavorited = true;
-      print(id);
-      print("Si me gusta");
+      final favorito = FavoriteImg(id: int.parse(id), url: url, like: _isFavorited.toString());
+      DBProvider.db.nuevoFavorito(favorito);
     }
   });
 }
@@ -37,8 +40,8 @@ _toggleFavorite(url, id  ) {
     return IconButton(
       icon: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border,
           color: Colors.pink),
-      onPressed: (){
-        _toggleFavorite(this.widget.url, this.widget.id);
+      onPressed: ()async {
+       await _toggleFavorite(this.widget.url, this.widget.id);
       } 
     );
   }

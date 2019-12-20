@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
 import 'package:hair_app/src/imagenes.dart';
+import 'package:hair_app/src/providers/db_provider.dart';
 import 'package:http/http.dart' as http;
 
 class Gallery extends StatefulWidget {
@@ -42,12 +44,26 @@ class _GalleryState extends State<Gallery> {
 
   @override
   Widget build(BuildContext context) {
-    if (loading) {
-      return Center(
+  
+    return FutureBuilder <List<FavoriteImg>>(
+      future: DBProvider.db.getAllFavoritos(),
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+
+        if( !snapshot.hasData){
+           return Center(
         child: CircularProgressIndicator(),
-      );
-    }
-    return Padding(
+          );
+        }
+
+        final  favorite = snapshot.data;
+
+        if(favorite.length == 0){
+            return Center(
+              child: Text("Elige un corte de cabello favorito"),
+            );
+        }
+
+        return Padding(
       padding: const EdgeInsets.only(left: 10, right: 8),
       child: GridView.builder(
         gridDelegate:
@@ -58,11 +74,11 @@ class _GalleryState extends State<Gallery> {
                     child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return ImagenGallery("0");
+                  return ImagenGallery(favorite.id);
                 }));
               },
               child: Image.network(
-                'https://picsum.photos/id/${ids[index]}/300/300',
+                favorite[index].url,
                 loadingBuilder:
                     (context, Widget child, ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -76,8 +92,16 @@ class _GalleryState extends State<Gallery> {
             ),
           );
         },
-        itemCount: ids.length,
+        itemCount: favorite.length,
       ),
+       );
+
+
+      }
     );
   }
 }
+
+
+
+ 
