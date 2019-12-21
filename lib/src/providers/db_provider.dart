@@ -45,7 +45,7 @@ class DBProvider {
         await db.execute(
           'CREATE TABLE favorito ('
           'id INTEGER PRIMAY KEY,'
-          'urlimgae TEXT,'
+          'url TEXT,'
           'like TEXT'
           ')' 
         );
@@ -71,7 +71,7 @@ class DBProvider {
 
   }
 
-  nuevoFavorito(FavoriteImg nuevoFavorito) async{
+ nuevoFavorito(FavoriteImg nuevoFavorito) async{
 
     final db = await database;
 

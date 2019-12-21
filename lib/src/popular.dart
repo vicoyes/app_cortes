@@ -10,7 +10,7 @@ import 'dart:io';
 
 // widget
 import 'favoriteButton.dart';
-import 'imagenes.dart';
+import 'imagenGallery.dart';
 
 
 class Popular extends StatefulWidget {

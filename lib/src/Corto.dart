@@ -9,7 +9,7 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'dart:io';
 
 // widget
-import 'imagenes.dart';
+import 'imagenGallery.dart';
 
 class Corto extends StatefulWidget {
   @override

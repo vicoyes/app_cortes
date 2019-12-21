@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:hair_app/src/imagenes.dart';
+import 'package:hair_app/src/imagenGallery.dart';
 import 'package:hair_app/src/providers/db_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -72,9 +72,9 @@ class _GalleryState extends State<Gallery> {
           return ClipRRect (
             borderRadius: BorderRadius.all(Radius.circular(10)),
                     child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return ImagenGallery(favorite.id);
+                  return ImagenGallery(favorite[index].id.toString());
                 }));
               },
               child: Image.network(

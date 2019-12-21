@@ -17,7 +17,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   String id;
   String url;
   
-@override
+
  _toggleFavorite(url, id  )  {
 
  setState(() {
@@ -29,7 +29,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       
     } else {
       _isFavorited = true;
-      final favorito = FavoriteImg(id: int.parse(id), url: url, like: _isFavorited.toString());
+      final favorito = FavoriteImg(id: int.parse(id), url: url.toString(), like: _isFavorited.toString());
       DBProvider.db.nuevoFavorito(favorito);
     }
   });

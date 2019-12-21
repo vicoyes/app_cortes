@@ -1,3 +1,4 @@
+// dependencias
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
@@ -8,7 +9,9 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'dart:io';
 
 // widget
-import 'imagenes.dart';
+import 'favoriteButton.dart';
+import 'imagenGallery.dart';
+
 
 class Largo extends StatefulWidget {
   @override
@@ -19,10 +22,12 @@ class _LargoState extends State<Largo> {
   bool loading;
   List<String> ids;
   List<Map> idimgs;
+  var _imageFile;
   bool like;
 
   @override
   void initState() {
+    loading = true;
     ids = [];
     idimgs = [];
     like = false;
@@ -53,7 +58,27 @@ class _LargoState extends State<Largo> {
         idimgs = _idimgs;
       });
     }
+    print(idimgs);
   }
+
+  // Funcion para descargar activar si deseas activar la funcion descargar
+
+  // void _onImageSaveButtonPressed(urlImage) async {
+  //   print("_onImageSaveButtonPressed");
+  //   var response = await http.get(urlImage);
+
+  //   debugPrint(response.statusCode.toString());
+
+  //   var filePath =
+  //       await ImagePickerSaver.saveFile(fileData: response.bodyBytes);
+
+  //   var savedFile = File.fromUri(Uri.file(filePath));
+  //   setState(() {
+  //     _imageFile = Future<File>.sync(() => savedFile);
+  //   });
+
+  //   print(_imageFile);
+  // }
 
   // compartir img
 
@@ -62,12 +87,6 @@ class _LargoState extends State<Largo> {
     var response = await request.close();
     Uint8List bytes = await consolidateHttpClientResponseBytes(response);
     await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
-  }
-
-  void _like(){
-    setState(() {
-      like = !like;
-    });
   }
 
   @override
@@ -126,14 +145,7 @@ class _LargoState extends State<Largo> {
                             children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(0),
-                                child: IconButton(
-                                  icon: Icon(like ? Icons.favorite_border : Icons.favorite,
-                                      color: Colors.pink),
-                                  onPressed: () {
-                                    _like();
-                                    print(like);
-                                  },
-                                ),
+                                child:FavoriteButton(ids[index], idimgs[index]["id"]),
                               ),
                             ],
                           ),
@@ -144,14 +156,13 @@ class _LargoState extends State<Largo> {
                             children: <Widget>[
                               Container(
                                 child: IconButton(
-                                  icon: Icon(
-                                    Icons.share,
-                                    color: Colors.pink,
-                                  ),
-                                  onPressed: () {
-                                    compartir(ids[index]);
-                                  },
-                                ),
+                                    icon: Icon(
+                                      Icons.share,
+                                      color: Colors.pink,
+                                    ),
+                                    onPressed: () async {
+                                      compartir(ids[index]);
+                                    }),
                               ),
                             ],
                           ),

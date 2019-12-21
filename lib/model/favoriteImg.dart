@@ -1,5 +1,4 @@
 
-
 class FavoriteImg {
     int id;
     String url;
@@ -12,14 +11,14 @@ class FavoriteImg {
     });
 
     factory FavoriteImg.fromJson(Map<String, dynamic> json) => FavoriteImg(
-        id: json["id"],
-        url: json["url"],
-        like: json["like"]
+        id: json['id'],
+        url: json['url'],
+        like: json['like']
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
-        "url": url,
-        "like": like,
+        'id': id,
+        'url': url,
+        'like': like
     };
 }
