@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:path/path.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'imagenGallery.dart';
 
@@ -71,11 +71,11 @@ class _ListadoState extends State<Listado> {
                             children: <Widget>[
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return ImagenGallery(datas['imgs']);
-                                      },
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.rightToLeft,
+                                      child: ImagenGallery(datas['imgs']),
                                     ),
                                   );
                                 },

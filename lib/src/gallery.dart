@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hair_app/src/imagenGallery.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Gallery extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _GalleryState extends State<Gallery> {
           }
 
           return Padding(
-            padding: const EdgeInsets.only(left: 10, right: 8),
+            padding: const EdgeInsets.all(8),
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
@@ -43,13 +44,17 @@ class _GalleryState extends State<Gallery> {
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   child: GestureDetector(
                     onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                      //   return ImagenGallery();
-                      // }));
-                      // print(datas);
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: ImagenGallery(datas['imgs']),
+                        ),
+                      );
                     },
                     child: Image.network(
                       datas['Img'],
+                      fit: BoxFit.cover,
                       loadingBuilder: (context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
