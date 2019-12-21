@@ -5,22 +5,27 @@ import 'package:hair_app/src/providers/db_provider.dart';
 class FavoriteButton extends StatefulWidget {
  final String id;
  final String url;
+ 
 
  FavoriteButton(this.url, this.id);
 
   @override
   _FavoriteButtonState createState() => _FavoriteButtonState();
+  
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  bool _isFavorited = false;
+  bool _isFavorited = false ;
   String id;
   String url;
+
   
 
  _toggleFavorite(url, id  )  {
 
  setState(() {
+
+ 
     
     if (_isFavorited) {
       _isFavorited = false;
@@ -31,7 +36,9 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       _isFavorited = true;
       final favorito = FavoriteImg(id: int.parse(id), url: url.toString(), like: _isFavorited.toString());
       DBProvider.db.nuevoFavorito(favorito);
+      print('esto se envia ${favorito.like}');
     }
+
   });
 }
 
