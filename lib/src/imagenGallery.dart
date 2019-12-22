@@ -1,47 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:hair_app/src/signleimg.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ImagenGallery extends StatefulWidget {
   final List<dynamic> id;
   ImagenGallery(this.id);
- 
- 
 
   @override
   _ImagenGalleryState createState() => _ImagenGalleryState();
-  
 }
 
- 
-
 class _ImagenGalleryState extends State<ImagenGallery> {
-//  List<String> urlimg;
-  
-  // @override
-  // void initState() {
-  //   urlimg =[];
-
-  //   super.initState();
-  // }
-  
-  // void cambiarString(){
-  //   List<String> _urlimg;
-    
-  //   for (var i=0;i<this.widget.id.length; i++) {
-        
-  //       _urlimg.add(this.widget.id[i]);
-  //   }
-
-  //   setState(() {
-  //     urlimg = _urlimg;
-  //   });
-
-  // }
   @override
   Widget build(BuildContext context) {
-   
-
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.pink),
       home: Scaffold(
@@ -65,28 +36,38 @@ class _ImagenGalleryState extends State<ImagenGallery> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: GridView.builder(
-                itemCount: this.widget.id.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                ),
-                itemBuilder: (context, index){
-                  List<dynamic> data = this.widget.id;
+              itemCount: this.widget.id.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+              ),
+              itemBuilder: (context, index) {
+                List<dynamic> data = this.widget.id;
 
-                  return Container(
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: SingleImg(data[index]) ));
+                  },
+                  child: Container(
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
-                      child: Image.network(
-                        data[index],
-                        fit: BoxFit.cover
-                      ),
+                      child: Image.network(data[index], fit: BoxFit.cover,
+                          loadingBuilder: (context, Widget child,
+                              ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: Image(
+                            image: AssetImage('img/loading-2.png'),
+                          ),
+                        );
+                      }),
                     ),
-                  );
-                },
-             ),
-          )
-          ),
+                  ),
+                );
+              },
+            ),
+          )),
     );
   }
 }

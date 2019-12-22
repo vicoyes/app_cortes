@@ -48,6 +48,8 @@ class _ListadoState extends State<Listado> {
 
           List<DocumentSnapshot> docs = snapshot.data.documents;
 
+          print(_isFavorited);
+
           return AnimationLimiter(
             child: ListView.builder(
                 itemCount: docs.length,
@@ -114,7 +116,18 @@ class _ListadoState extends State<Listado> {
                                                         ? Icons.favorite
                                                         : Icons.favorite_border,
                                                     color: Colors.pink),
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  if (_isFavorited) {
+                                                    _isFavorited = false;
+                                                    Firestore.instance.collection('cortes').document(docs[index].documentID)
+                                                    .updateData({'like': _isFavorited});
+                                                  } else {
+                                                    _isFavorited = true;
+                                                    Firestore.instance.collection('cortes').document(docs[index].documentID)
+                                                    .updateData({'like': _isFavorited});
+                                                  }
+                                                  
+                                                },
                                               ),
                                             ),
                                           ],
