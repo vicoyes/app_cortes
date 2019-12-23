@@ -14,8 +14,7 @@ class _GalleryState extends State<Gallery> {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: Firestore.instance
-            .collection('cortes')
-            .where('like', isEqualTo: true)
+            .collection('likes')
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
@@ -53,7 +52,7 @@ class _GalleryState extends State<Gallery> {
                       );
                     },
                     child: Image.network(
-                      datas['Img'],
+                      datas['url'],
                       fit: BoxFit.cover,
                       loadingBuilder: (context, Widget child,
                           ImageChunkEvent loadingProgress) {

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'imagenGallery.dart';
 
@@ -32,6 +33,13 @@ class _ListadoState extends State<Listado> {
     await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
   }
 
+// para guardar la preferencias
+_setLiked(key, bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+     prefs.setBool(key, value);
+  
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -48,13 +56,13 @@ class _ListadoState extends State<Listado> {
 
           List<DocumentSnapshot> docs = snapshot.data.documents;
 
-          print(_isFavorited);
 
           return AnimationLimiter(
             child: ListView.builder(
                 itemCount: docs.length,
                 itemBuilder: (BuildContext context, int index) {
                   Map<String, dynamic> datas = docs[index].data;
+
                   _isFavorited = datas['like'];
 
                   return AnimationConfiguration.staggeredList(
@@ -119,12 +127,22 @@ class _ListadoState extends State<Listado> {
                                                 onPressed: () {
                                                   if (_isFavorited) {
                                                     _isFavorited = false;
-                                                    Firestore.instance.collection('cortes').document(docs[index].documentID)
-                                                    .updateData({'like': _isFavorited});
+                                                    Firestore.instance.collection('likes').document(docs[index].documentID)
+                                                    .delete();
+
+                                                     _setLiked(docs[index].documentID.toString(), _isFavorited);
+
                                                   } else {
                                                     _isFavorited = true;
-                                                    Firestore.instance.collection('cortes').document(docs[index].documentID)
-                                                    .updateData({'like': _isFavorited});
+                                                    Firestore.instance.collection('likes').document(docs[index].documentID)
+                                                    .setData({
+                                                       'id': docs[index].documentID,
+                                                       'url': docs[index]['Img'],
+                                                       'imgs': docs[index]['imgs']
+
+                                                    });
+
+                                                    _setLiked(docs[index].documentID.toString(), _isFavorited);
                                                   }
                                                   
                                                 },
