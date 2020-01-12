@@ -11,6 +11,15 @@ class ImagenGallery extends StatefulWidget {
 }
 
 class _ImagenGalleryState extends State<ImagenGallery> {
+  String imgUrl;
+ 
+ @override
+  void initState() {
+     print(this.widget.id[0]);
+     imgUrl = this.widget.id[0];
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,40 +42,66 @@ class _ImagenGalleryState extends State<ImagenGallery> {
             )),
             title: Text('Galeria'),
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.builder(
-              itemCount: this.widget.id.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-              ),
-              itemBuilder: (context, index) {
-                List<dynamic> data = this.widget.id;
-
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: SingleImg(data[index]) ));
-                  },
-                  child: Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      child: Image.network(data[index], fit: BoxFit.cover,
-                          loadingBuilder: (context, Widget child,
-                              ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: Image(
-                            image: AssetImage('img/loading-2.png'),
-                          ),
-                        );
-                      }),
-                    ),
+          body: Column(
+            children: <Widget>[
+              Container(
+                  child:Image.network(imgUrl)
                   ),
-                );
-              },
-            ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: this.widget.id.length,
+                    itemBuilder: (context, index) {
+                      List<dynamic> data = this.widget.id;
+
+                      return GestureDetector(
+                        onTap: () {
+                         print(data[index]); 
+
+                         setState(() {
+                           imgUrl = data[index];
+                         });
+
+                        //   Navigator.push(
+                        //       context,
+                        //       PageTransition(
+                        //           type: PageTransitionType.fade,
+                        //           child: SingleImg(data[index])));
+                        },
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Center(
+                            child: Container(
+                              constraints: BoxConstraints(
+                                maxHeight: 100,
+                              ),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(2)),
+                                child: Image.network(data[index],
+                                    fit: BoxFit.cover, loadingBuilder: (context,
+                                        Widget child,
+                                        ImageChunkEvent loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: Image(
+                                      image: AssetImage('img/loading-2.png'),
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           )),
     );
   }
