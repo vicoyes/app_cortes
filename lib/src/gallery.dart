@@ -13,9 +13,7 @@ class _GalleryState extends State<Gallery> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Firestore.instance
-            .collection('likes')
-            .snapshots(),
+        stream: Firestore.instance.collection('likes').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -47,9 +45,11 @@ class _GalleryState extends State<Gallery> {
                         context,
                         PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: ImagenGallery(datas['imgs']),
+                          child: ImagenGallery(datas['imgs'], datas['Img'],
+                              datas['video'], true, datas['id']),
                         ),
                       );
+                      print(datas);
                     },
                     child: Image.network(
                       datas['url'],

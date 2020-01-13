@@ -1,10 +1,19 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hair_app/src/signleimg.dart';
-import 'package:page_transition/page_transition.dart';
 
 class ImagenGallery extends StatefulWidget {
-  final List<dynamic> id;
-  ImagenGallery(this.id);
+  final List<dynamic> url;
+  final String img;
+  final String videoUrl;
+  final bool like;
+  final String id;
+
+  ImagenGallery(this.url, this.img, this.videoUrl, this.like, this.id);
 
   @override
   _ImagenGalleryState createState() => _ImagenGalleryState();
@@ -12,14 +21,25 @@ class ImagenGallery extends StatefulWidget {
 
 class _ImagenGalleryState extends State<ImagenGallery> {
   String imgUrl;
- 
- @override
+  bool _isFavorited;
+
+  // compartir img
+
+  void compartir(imgUrl) async {
+    var request = await HttpClient().getUrl(Uri.parse(imgUrl));
+    var response = await request.close();
+    Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+    await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
+  }
+
+  @override
   void initState() {
-     print(this.widget.id[0]);
-     imgUrl = this.widget.id[0];
+    print(this.widget.img);
+    imgUrl = this.widget.url[0];
+    _isFavorited = this.widget.like;
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,33 +64,67 @@ class _ImagenGalleryState extends State<ImagenGallery> {
           ),
           body: Column(
             children: <Widget>[
+              Container(child: Image.network(imgUrl)),
               Container(
-                  child:Image.network(imgUrl)
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      _isFavorited ? Icons.favorite : Icons.favorite_border,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      if (_isFavorited) {
+                        Firestore.instance
+                            .collection('likes')
+                            .document(this.widget.id)
+                            .delete();
+                        setState(() {
+                          _isFavorited = false;
+                        });
+                      } else {
+                        Firestore.instance
+                            .collection('likes')
+                            .document(this.widget.id)
+                            .setData({
+                          'id': this.widget.id,
+                          'url': this.widget.img,
+                          'imgs': this.widget.url,
+                          'like': true
+                        });
+                         setState(() {
+                          _isFavorited = true;
+                        });
+                      }
+                    },
                   ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      compartir(imgUrl);
+                    },
+                  ),
+                ],
+              )),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: this.widget.id.length,
+                    itemCount: this.widget.url.length,
                     itemBuilder: (context, index) {
-                      List<dynamic> data = this.widget.id;
+                      List<dynamic> data = this.widget.url;
 
                       return GestureDetector(
                         onTap: () {
-                         print(data[index]); 
-
-                         setState(() {
-                           imgUrl = data[index];
-                         });
-
-                        //   Navigator.push(
-                        //       context,
-                        //       PageTransition(
-                        //           type: PageTransitionType.fade,
-                        //           child: SingleImg(data[index])));
+                          setState(() {
+                            imgUrl = data[index];
+                          });
                         },
-
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Center(

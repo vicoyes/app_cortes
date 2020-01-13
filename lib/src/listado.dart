@@ -9,7 +9,6 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'imagenGallery.dart';
 
@@ -33,6 +32,7 @@ class _ListadoState extends State<Listado> {
     Uint8List bytes = await consolidateHttpClientResponseBytes(response);
     await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +80,10 @@ class _ListadoState extends State<Listado> {
                           context,
                           PageTransition(
                             type: PageTransitionType.rightToLeft,
-                            child: ImagenGallery(datas['imgs']),
+                            child: ImagenGallery(datas['imgs'], datas['Img'], datas['video'], false, docs[index].documentID),
                           ),
                         );
+                        print(datas['Img']);
                       },
                     ),
                   ),
@@ -158,7 +159,7 @@ class _ListadoState extends State<Listado> {
 //                                           children: <Widget>[
 //                                             Container(
 //                                               padding: EdgeInsets.all(0),
-//                                               child: IconButton(
+//                                               child:IconButton(
 //                                                 icon: Icon(
 //                                                     _isFavorited
 //                                                         ? Icons.favorite
