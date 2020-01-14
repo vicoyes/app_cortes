@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hair_app/src/video.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ImagenGallery extends StatefulWidget {
   final List<dynamic> url;
@@ -22,6 +24,7 @@ class ImagenGallery extends StatefulWidget {
 class _ImagenGalleryState extends State<ImagenGallery> {
   String imgUrl;
   bool _isFavorited;
+  var pantalla;
 
   // compartir img
 
@@ -36,6 +39,7 @@ class _ImagenGalleryState extends State<ImagenGallery> {
   void initState() {
     print(this.widget.img);
     imgUrl = this.widget.url[0];
+     pantalla = Image.network(imgUrl);
     _isFavorited = this.widget.like;
     super.initState();
   }
@@ -64,7 +68,12 @@ class _ImagenGalleryState extends State<ImagenGallery> {
           ),
           body: Column(
             children: <Widget>[
-              Container(child: Image.network(imgUrl)),
+            Expanded(
+                  child: Container(
+                  child: pantalla,
+                ),
+              ),
+
               Container(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -93,7 +102,7 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                           'imgs': this.widget.url,
                           'like': true
                         });
-                         setState(() {
+                        setState(() {
                           _isFavorited = true;
                         });
                       }
@@ -122,7 +131,7 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            imgUrl = data[index];
+                            pantalla = Image.network(data[index]);
                           });
                         },
                         child: Padding(
@@ -155,6 +164,40 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                   ),
                 ),
               ),
+              Container(
+                  padding: EdgeInsets.all(8),
+                  child: RaisedButton(
+                    onPressed: () {
+                      // Navigator.push(
+                      //     context,
+                      //     PageTransition(
+                      //       type: PageTransitionType.rightToLeft,
+                      //       child: Video(),
+                      //     ),
+                      // );
+                      setState(() {
+                        pantalla = Video();
+                      });
+                    },
+                    textColor: Colors.white,
+                    color: Colors.pink,
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Ver Video',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Icon(Icons.play_circle_outline),
+                        ),
+                      ],
+                    ),
+                  ))
             ],
           )),
     );
