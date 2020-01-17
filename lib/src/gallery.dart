@@ -5,15 +5,21 @@ import 'package:hair_app/src/imagenGallery.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Gallery extends StatefulWidget {
-  @override
+final String userId;
+Gallery(this.userId);
+
+ @override
   _GalleryState createState() => _GalleryState();
 }
 
 class _GalleryState extends State<Gallery> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Firestore.instance.collection('likes').snapshots(),
+        stream: Firestore.instance.collection('data').document(this.widget.userId).collection('likes').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -22,11 +28,11 @@ class _GalleryState extends State<Gallery> {
           }
 
           List<DocumentSnapshot> docs = snapshot.data.documents;
-
           if (docs.length == 0) {
-            return Center(
-              child: Text('Por favor elige tu primer favorito'),
-            );
+            return 
+                Center(
+                  child: Text('Por favor elige tu primer favorito'),
+                ); 
           }
 
           return Padding(
@@ -45,7 +51,7 @@ class _GalleryState extends State<Gallery> {
                         context,
                         PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: ImagenGallery(datas['imgs'], datas['Img'],
+                          child: ImagenGallery( datas['imgs'], datas['Img'],
                               datas['video'], true, datas['id']),
                         ),
                       );

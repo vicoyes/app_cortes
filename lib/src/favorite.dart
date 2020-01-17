@@ -1,16 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hair_app/src/gallery.dart';
 
 
-
-
 class Favorite extends StatefulWidget {
+  final String userId;
+  Favorite(this.userId);
+
+
   @override
   _FavoriteState createState() => _FavoriteState();
 }
 
 class _FavoriteState extends State<Favorite> {
 String title = 'Favoritos';
+String userID;
+
+@override
+  void initState() {
+    super.initState();
+  }
+
+// obtener id usuario
+  void getUserID() async {
+    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    userID = user.uid;
+  }  
 
 
   @override
@@ -31,7 +46,7 @@ String title = 'Favoritos';
             
           ),
 
-          body: Gallery(),
+          body: Gallery(this.widget.userId),
         ),
     );
   }

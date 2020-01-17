@@ -3,10 +3,10 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hair_app/src/video.dart';
-import 'package:page_transition/page_transition.dart';
 
 class ImagenGallery extends StatefulWidget {
   final List<dynamic> url;
@@ -25,6 +25,7 @@ class _ImagenGalleryState extends State<ImagenGallery> {
   String imgUrl;
   bool _isFavorited;
   var pantalla;
+  String userID;
 
   // compartir img
 
@@ -35,12 +36,20 @@ class _ImagenGalleryState extends State<ImagenGallery> {
     await Share.file('Cortes de cabello', 'corte.png', bytes, 'image/png');
   }
 
+  // obtener id usuario
+  void getUserID() async {
+    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    userID = user.uid;
+    print(userID);
+  }
+
   @override
   void initState() {
     print(this.widget.img);
     imgUrl = this.widget.url[0];
-     pantalla = Image.network(imgUrl);
+    pantalla = Image.network(imgUrl);
     _isFavorited = this.widget.like;
+    getUserID();
     super.initState();
   }
 
@@ -68,12 +77,11 @@ class _ImagenGalleryState extends State<ImagenGallery> {
           ),
           body: Column(
             children: <Widget>[
-            Expanded(
-                  child: Container(
+              Expanded(
+                child: Container(
                   child: pantalla,
                 ),
               ),
-
               Container(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -86,6 +94,8 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                     onPressed: () {
                       if (_isFavorited) {
                         Firestore.instance
+                            .collection('data')
+                            .document(userID)
                             .collection('likes')
                             .document(this.widget.id)
                             .delete();
@@ -94,6 +104,8 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                         });
                       } else {
                         Firestore.instance
+                            .collection('data')
+                            .document(userID)
                             .collection('likes')
                             .document(this.widget.id)
                             .setData({
@@ -165,39 +177,33 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                 ),
               ),
               Container(
-                  padding: EdgeInsets.all(8),
-                  child: RaisedButton(
-                    onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     PageTransition(
-                      //       type: PageTransitionType.rightToLeft,
-                      //       child: Video(),
-                      //     ),
-                      // );
-                      setState(() {
-                        pantalla = Video();
-                      });
-                    },
-                    textColor: Colors.white,
-                    color: Colors.pink,
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Ver Video',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                padding: EdgeInsets.all(8),
+                child: RaisedButton(
+                  onPressed: () {
+                    setState(() {
+                      pantalla = Video(this.widget.videoUrl);
+                    });
+                  },
+                  textColor: Colors.white,
+                  color: Colors.pink,
+                  padding: EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Ver Video',
+                        style: TextStyle(
+                          fontSize: 18,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Icon(Icons.play_circle_outline),
-                        ),
-                      ],
-                    ),
-                  ))
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Icon(Icons.play_circle_outline),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           )),
     );

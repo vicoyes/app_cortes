@@ -1,20 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hair_app/src/favorite.dart';
 import 'package:hair_app/src/inicio.dart';
 
 
-
 class Home extends StatefulWidget {
+  final String userId;
+  Home(this.userId);
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
 
+// String userID;
+
+// // obtener id usuario
+//   void getUserID() async {
+//     final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//     userID = user.uid;
+//   } 
+
 int currentetab = 0;
 final List<Widget> screens =[
   Inicio(),
-  Favorite()
+
 ];
 
 
@@ -66,8 +77,9 @@ final PageStorageBucket bucket = PageStorageBucket();
                     minWidth: 40,
                     onPressed: (){
                       setState(() {
-                        currentScreen = Favorite();
+                        currentScreen = Favorite(this.widget.userId);
                         currentetab = 1;
+                        // getUserID();
                       });
                     },
                     child: Column(
