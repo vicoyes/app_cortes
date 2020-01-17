@@ -144,6 +144,7 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                         onTap: () {
                           setState(() {
                             pantalla = Image.network(data[index]);
+                            imgUrl = data[index];
                           });
                         },
                         child: Padding(
