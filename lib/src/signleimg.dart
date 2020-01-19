@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 class SingleImg extends StatefulWidget {
   String url;
@@ -9,33 +10,33 @@ class SingleImg extends StatefulWidget {
 }
 
 class _SingleImgState extends State<SingleImg> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.grey[900],
-      appBar:  AppBar(
-            leading: new IconButton(
-              icon: new Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
+      backgroundColor: Colors.grey[900],
+      appBar: AppBar(
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 8,
+        textTheme: TextTheme(
+            title: TextStyle(
+          color: Colors.pink,
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+        )),
+        title: Text('Galeria'),
+      ),
+      body: Container(
+        child: Center(
+            child: PhotoView(
+              imageProvider: NetworkImage(this.widget.url),
             ),
-            backgroundColor: Colors.white,
-            centerTitle: true,
-            elevation: 8,
-            textTheme: TextTheme(
-                title: TextStyle(
-              color: Colors.pink,
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-            )),
-            title: Text('Galeria'),
-          ),
-          body: Container(
-            child: Center(
-              child: Image.network(this.widget.url),
             ),
-          ),
+      ),
     );
-
   }
 }

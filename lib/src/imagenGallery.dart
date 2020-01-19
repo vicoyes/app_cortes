@@ -6,7 +6,9 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hair_app/src/signleimg.dart';
 import 'package:hair_app/src/video.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ImagenGallery extends StatefulWidget {
   final List<dynamic> url;
@@ -47,7 +49,18 @@ class _ImagenGalleryState extends State<ImagenGallery> {
   void initState() {
     print(this.widget.img);
     imgUrl = this.widget.url[0];
-    pantalla = Image.network(imgUrl);
+    pantalla = GestureDetector(
+      child: Image.network(imgUrl),
+      onTap: () {
+        Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.rightToLeft,
+            child: SingleImg(imgUrl),
+          ),
+        );
+      },
+    );
     _isFavorited = this.widget.like;
     getUserID();
     super.initState();
@@ -144,7 +157,18 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                       return GestureDetector(
                         onTap: () {
                           setState(() {
-                            pantalla = Image.network(data[index]);
+                            pantalla = GestureDetector(
+                              child: Image.network(data[index]),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: SingleImg(data[index]),
+                                  ),
+                                );
+                              },
+                            );
                             imgUrl = data[index];
                           });
                         },
@@ -212,3 +236,5 @@ class _ImagenGalleryState extends State<ImagenGallery> {
     );
   }
 }
+
+
