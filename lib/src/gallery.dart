@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:hair_app/src/imagenGallery.dart';
 import 'package:page_transition/page_transition.dart';
@@ -37,10 +38,14 @@ class _GalleryState extends State<Gallery> {
 
           return Padding(
             padding: const EdgeInsets.all(8),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
-              itemBuilder: (context, index) {
+            child: StaggeredGridView.countBuilder(
+            crossAxisCount: 4,
+            itemCount: docs.length,
+            staggeredTileBuilder: (int index) =>
+                  new StaggeredTile.fit(2),
+              mainAxisSpacing: 4.0,
+              crossAxisSpacing: 4.0,
+              itemBuilder: (BuildContext context, int index){
                 Map<String, dynamic> datas = docs[index].data;
 
                 return ClipRRect(
@@ -55,7 +60,7 @@ class _GalleryState extends State<Gallery> {
                               datas['video'], true, datas['id']),
                         ),
                       );
-                      print(datas);
+                      print('data_video: ${datas['video']}');
                     },
                     child: Image.network(
                       datas['url'],
@@ -72,10 +77,11 @@ class _GalleryState extends State<Gallery> {
                     ),
                   ),
                 );
+
               },
-              itemCount: docs.length,
-            ),
+            )
           );
         });
   }
 }
+

@@ -83,14 +83,13 @@ class _ListadoState extends State<Listado> {
                             child: ImagenGallery(datas['imgs'], datas['Img'], datas['video'], false, docs[index].documentID),
                           ),
                         );
-                        print(datas['Img']);
                       },
                     ),
                   ),
                 );
               },
               staggeredTileBuilder: (int index) =>
-                  new StaggeredTile.count(2, index.isEven ? 2 : 1),
+                  new StaggeredTile.fit(2),
               mainAxisSpacing: 4.0,
               crossAxisSpacing: 4.0,
             )),

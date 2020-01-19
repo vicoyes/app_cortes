@@ -112,7 +112,8 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                           'id': this.widget.id,
                           'url': this.widget.img,
                           'imgs': this.widget.url,
-                          'like': true
+                          'like': true,
+                          'video': this.widget.videoUrl
                         });
                         setState(() {
                           _isFavorited = true;
@@ -183,6 +184,7 @@ class _ImagenGalleryState extends State<ImagenGallery> {
                   onPressed: () {
                     setState(() {
                       pantalla = Video(this.widget.videoUrl);
+                      print('video_url: ${this.widget.videoUrl}');
                     });
                   },
                   textColor: Colors.white,

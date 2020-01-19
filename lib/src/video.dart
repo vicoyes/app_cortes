@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player/youtube_player.dart';
+// import 'package:youtube_player/youtube_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Video extends StatefulWidget {
   final String videoUrl;
@@ -10,22 +11,28 @@ class Video extends StatefulWidget {
 }
 
 class _VideoState extends State<Video> {
-  String _source = "https://www.youtube.com/watch?v=i1NPS6I5fmA&t=96s";
+  String videoId;
+  YoutubePlayerController _controller;
 
   @override
   void initState() {
-    _source = this.widget.videoUrl;
     super.initState();
+    videoId = YoutubePlayer.convertUrlToId(this.widget.videoUrl);
+    print('video id_ $videoId');
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return YoutubePlayer(
-    context: context,
-    source: _source,
-    quality: YoutubeQuality.HD,
-    // callbackController is (optional). 
-    // use it to control player on your own.
-  );
+      controller: _controller,
+      showVideoProgressIndicator: true,
+    );
   }
 }
