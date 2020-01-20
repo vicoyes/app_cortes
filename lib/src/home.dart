@@ -1,7 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hair_app/src/favorite.dart';
 import 'package:hair_app/src/inicio.dart';
+import 'package:hair_app/src/providers/push_notification_provaider.dart';
+
 
 
 class Home extends StatefulWidget {
@@ -14,14 +16,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-// String userID;
-
-// // obtener id usuario
-//   void getUserID() async {
-//     final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-//     userID = user.uid;
-//   } 
-
 int currentetab = 0;
 final List<Widget> screens =[
   Inicio(),
@@ -32,6 +26,7 @@ final List<Widget> screens =[
 Widget currentScreen = Inicio();
 
 final PageStorageBucket bucket = PageStorageBucket();
+
 
   @override
   Widget build(BuildContext context) {

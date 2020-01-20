@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hair_app/src/home.dart';
+import 'package:hair_app/src/providers/push_notification_provaider.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Login extends StatefulWidget {
@@ -23,10 +24,27 @@ class _LoginState extends State<Login> {
       print(e);
     });
     super.initState();
+    final initNotification = new PushNotification();
+
+    initNotification.initNotification();
+
+    initNotification.mensaje.listen((argumento){
+        print('Argumeto: $argumento');
+
+        final stack = SnackBar(
+          content: Text(argumento),
+          action: SnackBarAction(
+            label: 'Aceptar',
+            onPressed: () => null,
+          ),
+        );
+
+        Scaffold.of(context).showSnackBar(stack);
+    });
+    
   }
 
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
 
   Future<FirebaseAuth> sigIn() async {
     AuthResult user = await FirebaseAuth.instance.signInAnonymously();
